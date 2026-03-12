@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Register</title>
+</head>
+<body>
+
+<h2>User Registration</h2>
+
+<form id="registerForm">
+Username: <input type="text" id="username"><br><br>
+Password: <input type="password" id="password"><br><br>
+
+<button type="submit">Register</button>
+</form>
+
+<script>
+document.getElementById("registerForm").onsubmit = function(e) {
+e.preventDefault();
+
+fetch("http://localhost:8080/user/register", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+username: document.getElementById("username").value,
+password: document.getElementById("password").value
+})
+})
+.then(res => res.json())
+.then(data => alert("User Registered"));
+};
+</script>
+
+</body>
+</html>

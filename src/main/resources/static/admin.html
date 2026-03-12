@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+</head>
+
+<body>
+
+<h2>Admin Dashboard</h2>
+
+<button onclick="loadFeedback()">View All Feedback</button>
+
+<table border="1" id="table">
+<tr>
+<th>ID</th>
+<th>Username</th>
+<th>Message</th>
+<th>Action</th>
+</tr>
+</table>
+
+<script>
+
+function loadFeedback(){
+
+fetch("http://localhost:8080/admin/all")
+.then(response => response.json())
+.then(data => {
+
+let table = document.getElementById("table");
+
+data.forEach(f => {
+
+let row = table.insertRow();
+
+row.insertCell(0).innerHTML = f.id;
+row.insertCell(1).innerHTML = f.username;
+row.insertCell(2).innerHTML = f.message;
+
+row.insertCell(3).innerHTML =
+"<button onclick='deleteFeedback("+f.id+")'>Delete</button>";
+
+});
+
+});
+
+}
+
+function deleteFeedback(id){
+
+fetch("http://localhost:8080/admin/delete/"+id,{
+method:"DELETE"
+})
+.then(()=>location.reload());
+
+}
+
+</script>
+
+</body>
+</html>
